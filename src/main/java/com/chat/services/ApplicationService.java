@@ -1,4 +1,4 @@
-package com.chat.data.services;
+package com.chat.services;
 
 import com.chat.data.entities.Application;
 import com.chat.data.repositories.ApplicationRepository;

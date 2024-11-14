@@ -2,7 +2,6 @@ package com.chat.services;
 
 import com.chat.data.entities.Application;
 import com.chat.data.repositories.ApplicationRepository;
-import com.chat.data.services.ApplicationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
