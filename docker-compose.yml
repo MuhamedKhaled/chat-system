@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # MySQL database
+  mysql:
+    image: mysql:8.0
+    container_name: chat_system_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: chat_system
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - chat_network
+
+  # Spring Boot application with automatic JAR building
+  spring_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chat_system_spring_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/chat_system?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: user_password
+    depends_on:
+      - mysql
+    networks:
+      - chat_network
+
+volumes:
+  mysql_data:
+
+networks:
+  chat_network:
