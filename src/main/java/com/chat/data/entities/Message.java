@@ -3,8 +3,14 @@ package com.chat.data.entities;
 
 import com.chat.elasticsearch.listeners.MessageDocumentEntityListener;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Data
 @Entity
 @Table(name = "messages", indexes = {

@@ -12,9 +12,12 @@ import java.util.Optional;
 
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
-    Optional<Chat> findByApplicationIdAndNumber(Long applicationId, Integer number); // To find chat by app and chat number
+    Optional<Chat> findByApplicationIdAndNumber(Long applicationId, Integer number);
     Page<Chat> findByApplicationId(Long applicationId, Pageable pageable);
 
     @Query("SELECT MAX(c.number) FROM Chat c WHERE c.application.id = :applicationId")
     Optional<Integer> findMaxNumberByApplicationId(@Param("applicationId") Long applicationId);
+
+    @Query("SELECT c.id FROM Chat c WHERE c.applicationId = :applicationId AND c.number = :chatNumber")
+    Optional<Long> findChatIdByApplicationIdAndChatNumber(@Param("applicationId") Long applicationId, @Param("chatNumber") Integer chatNumber);
 }

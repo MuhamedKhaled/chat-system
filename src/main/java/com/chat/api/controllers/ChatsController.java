@@ -2,7 +2,6 @@ package com.chat.api.controllers;
 
 
 import com.chat.api.controllers.resources.ChatResponse;
-import com.chat.services.ApplicationService;
 import com.chat.services.ChatService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import java.util.List;
 public class ChatsController {
 
     private final ChatService chatService;
-    private final ApplicationService applicationService;
 
     @GetMapping
     public ResponseEntity<List<ChatResponse>> listChats(
@@ -37,4 +35,5 @@ public class ChatsController {
         ChatResponse chatResponse = chatService.getChatByApplicationIdAndNumber(token, number);
         return ResponseEntity.ok(chatResponse);
     }
+
 }

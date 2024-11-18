@@ -1,26 +1,26 @@
 package com.chat.consumers;
 
-import com.chat.data.dtos.ChatMessageDTO;
-import com.chat.data.entities.Chat;
-import com.chat.data.repositories.ChatRepository;
+import com.chat.data.dtos.MessageDTO;
+import com.chat.data.entities.Message;
+import com.chat.data.repositories.MessageRepository;
 import com.chat.services.RedisCacheService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rabbitmq.client.Channel;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
-import org.springframework.stereotype.Component;
 import org.springframework.messaging.handler.annotation.Header;
-import com.rabbitmq.client.Channel;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class ChatsConsumer {
-    private static final String  QUEUE_NAME ="create_chat_queue";
+public class MessagesConsumer {
+    private static final String  QUEUE_NAME ="create_message_queue";
 
-    private final ChatRepository chatRepository;
+    private final MessageRepository messageRepository;
     private final RedisCacheService redisCacheService;
     private final ObjectMapper objectMapper;
 
@@ -29,19 +29,20 @@ public class ChatsConsumer {
     public void consumeMessage(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) throws IOException {
         try {
             // Parse the incoming message to ChatMessageDTO
-            ChatMessageDTO chatMessage = objectMapper.readValue(message, ChatMessageDTO.class);
+            MessageDTO messageDTO = objectMapper.readValue(message, MessageDTO.class);
 
-            Chat chat = Chat.builder()
-                    .applicationId(chatMessage.getApplicationId())
-                    .number(chatMessage.getNumber())
-                    .messagesCount(0)
+            Message messageObj = Message.builder()
+                    .body(messageDTO.getBody())
+                    .number(messageDTO.getNumber())
+                    .chatId(messageDTO.getChatId())
                     .build();
 
+
             // Save the chat entity
-            chatRepository.save(chat);
+            messageRepository.save(messageObj);
 
             // Add application ID to Redis
-            redisCacheService.addToSet("updated_applications", chatMessage.getApplicationId().toString());
+            redisCacheService.addToSet("updated_chats", messageDTO.getChatId().toString());
 
             // Acknowledge the message
             channel.basicAck(deliveryTag, false);
