@@ -7,9 +7,7 @@ import com.chat.data.repositories.ChatRepository;
 import com.chat.data.repositories.MessageRepository;
 import com.chat.mappers.ChatMapper;
 import lombok.AllArgsConstructor;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.redisson.api.RLock;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +23,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ChatService {
     private static final String  QUEUE_NAME ="create_chat_queue";
+
     private final ChatRepository chatRepository;
     private final ApplicationService applicationService;
     private final ChatMapper chatMapper;

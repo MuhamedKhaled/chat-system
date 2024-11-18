@@ -24,7 +24,7 @@ public class MessageController {
     @GetMapping
     public ResponseEntity<?> getMessages(@PathVariable String token, @PathVariable Integer chat_number,
             @RequestParam(required = false) String query,
-                                         @RequestParam(defaultValue = "1") int page,
+                                         @RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "10") int limit
     ) {
         Pageable pageable = PageRequest.of(page, limit);

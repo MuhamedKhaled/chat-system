@@ -10,10 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class PublisherService {
-//    private static final boolean DURABLE = true;
 
     private final RabbitTemplate rabbitTemplate;
-//    private final AmqpAdmin amqpAdmin;
     private final ObjectMapper objectMapper;
 
     public void publish(String queueName, Object object) {

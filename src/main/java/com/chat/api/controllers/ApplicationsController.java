@@ -19,7 +19,7 @@ public class ApplicationsController {
 
     @GetMapping
     public ResponseEntity<List<ApplicationResponse>> getAllApplications(
-            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit) {
         return ResponseEntity.ok(applicationService.getAllApplications(page, limit));
     }

@@ -15,7 +15,9 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class MessageService {
+
     private static final String  QUEUE_NAME ="create_message_queue";
+
     private final MessageRepository messageRepository;
     private final ElasticsearchService elasticsearchService;
     private final MessageMapper messageMapper;
