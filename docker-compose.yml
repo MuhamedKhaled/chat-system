@@ -18,22 +18,26 @@ services:
       - chat_network
 
   # Spring Boot application with automatic JAR building
-  chat_app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: chat_system_spring_app
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/chat_system?allowPublicKeyRetrieval=true&useSSL=false
-      SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: user_password
-      ELASTICSEARCH_URL: http://elasticsearch:9200
-    depends_on:
-      - mysql
-    networks:
-      - chat_network
+  # chat_app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: chat_system_spring_app
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/chat_system?allowPublicKeyRetrieval=true&useSSL=false
+  #     SPRING_DATASOURCE_USERNAME: user
+  #     SPRING_DATASOURCE_PASSWORD: user_password
+  #     ELASTICSEARCH_URL: http://elasticsearch:9200
+  #     REDIS_HOST: redis
+  #     REDIS_PORT: 6379
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #     - elasticsearch
+  #   networks:
+  #     - chat_network
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.1.0
@@ -43,6 +47,8 @@ services:
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
       - xpack.security.enabled=false
       - xpack.security.transport.ssl.enabled=false
+      - xpack.monitoring.collection.enabled=true
+      - logger.level= debug
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -60,6 +66,28 @@ services:
       - "5601:5601"
     depends_on:
       - elasticsearch
+    networks:
+      - chat_network
+
+  # Redis Stack (Redis + RedisInsight)
+  redis-stack:
+    image: redis/redis-stack:latest
+    container_name: chat_system_redis_stack
+    ports:
+      - "6379:6379"
+      - "8001:8001" # RedisInsight UI
+    networks:
+      - chat_network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"  # Default RabbitMQ connection port
+      - "15672:15672" # RabbitMQ management portal
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
     networks:
       - chat_network
 

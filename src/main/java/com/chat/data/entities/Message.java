@@ -1,7 +1,7 @@
 package com.chat.data.entities;
 
 
-import com.chat.listeners.MessageEntityListener;
+import com.chat.elasticsearch.listeners.MessageDocumentEntityListener;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import lombok.Data;
 @Table(name = "messages", indexes = {
         @Index(name = "chat_id_and_message_number_index", columnList = "chat_id, number", unique = true)
 })
-@EntityListeners(MessageEntityListener.class)
+@EntityListeners(MessageDocumentEntityListener.class)
 public class Message extends BaseEntity {
 
     @Id

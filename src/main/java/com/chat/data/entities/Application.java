@@ -1,13 +1,19 @@
 package com.chat.data.entities;
 
+import com.chat.listeners.ApplicationEntityListener;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Setter
+@Getter
 @Entity
 @Table(name = "applications", indexes = {
         @Index(name = "application_token_index", columnList = "token", unique = true)
 })
+@EntityListeners(ApplicationEntityListener.class)
 public class Application extends BaseEntity {
 
     @Id

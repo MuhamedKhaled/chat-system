@@ -12,7 +12,7 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 @Document(indexName = "chat_messages")
 public class MessageDocument {
     @Id
-    private String id; // Elasticsearch ID
+    private String id;
 
     @Field(type = FieldType.Long)
     private Long chatId;

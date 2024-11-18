@@ -1,4 +1,4 @@
-package com.chat.listeners;
+package com.chat.elasticsearch.listeners;
 
 import com.chat.data.entities.Message;
 import com.chat.elasticsearch.entities.MessageDocument;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MessageEntityListener {
+public class MessageDocumentEntityListener {
 
     @Autowired
     private MessageSearchRepository messageSearchRepository;
