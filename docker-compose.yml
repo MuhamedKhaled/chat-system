@@ -18,26 +18,35 @@ services:
       - chat_network
 
   # Spring Boot application with automatic JAR building
-  # chat_app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   container_name: chat_system_spring_app
-  #   ports:
-  #     - "8080:8080"
-  #   environment:
-  #     SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/chat_system?allowPublicKeyRetrieval=true&useSSL=false
-  #     SPRING_DATASOURCE_USERNAME: user
-  #     SPRING_DATASOURCE_PASSWORD: user_password
-  #     ELASTICSEARCH_URL: http://elasticsearch:9200
-  #     REDIS_HOST: redis
-  #     REDIS_PORT: 6379
-  #   depends_on:
-  #     - mysql
-  #     - redis
-  #     - elasticsearch
-  #   networks:
-  #     - chat_network
+  chat_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chat_system_spring_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/chat_system?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: user_password
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      REDIS_HOST: chat_system_redis_stack
+      REDIS_PORT: 6379
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_QUEUES: chat_queue
+      APPLICATION_COUNTER_CRON: "0/10 * * * * *"
+      CHAT_COUNTER_CRON: "0/10 * * * * *"
+    depends_on:
+      - elasticsearch
+      - mysql
+      - redis-stack
+      - rabbitmq
+    restart: always
+    networks:
+      - chat_network
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.1.0
