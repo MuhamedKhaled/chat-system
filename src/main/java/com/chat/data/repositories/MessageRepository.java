@@ -14,4 +14,5 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     @Query("SELECT MAX(m.number) FROM Message m WHERE m.chatId = :chatId")
     Optional<Integer> findMaxNumberByChatId(Long chatId);
 
+    Long countByChatId(Long chatId);
 }

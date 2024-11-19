@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -108,6 +109,18 @@ public class ChatService {
             if (lock != null) {
                 redisCacheService.releaseLock(lock);
             }
+        }
+    }
+
+    public void updateChatCounters() {
+        Set<String> updatedChats = redisCacheService.getSetMembers("updated_chats");
+
+        for (String chatId : updatedChats) {
+            Long count = messageRepository.countByChatId(Long.parseLong(chatId));
+            chatRepository.findById(Long.parseLong(chatId)).ifPresent(chat -> {
+                chat.setMessagesCount(count.intValue());
+                chatRepository.save(chat);
+            });
         }
     }
 }

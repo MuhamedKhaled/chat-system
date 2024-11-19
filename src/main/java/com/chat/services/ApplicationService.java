@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -113,4 +114,15 @@ public class ApplicationService {
         }
     }
 
+    public void updateApplicationCounters() {
+        Set<String> updatedApplications = redisCacheService.getSetMembers("updated_applications");
+
+        for (String applicationId : updatedApplications) {
+            Long count = chatRepository.countByApplicationId(Long.parseLong(applicationId));
+            applicationRepository.findById(Long.parseLong(applicationId)).ifPresent(application -> {
+                application.setChatsCount(count.intValue());
+                applicationRepository.save(application);
+            });
+        }
+    }
 }

@@ -20,4 +20,6 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
 
     @Query("SELECT c.id FROM Chat c WHERE c.applicationId = :applicationId AND c.number = :chatNumber")
     Optional<Long> findChatIdByApplicationIdAndChatNumber(@Param("applicationId") Long applicationId, @Param("chatNumber") Integer chatNumber);
+
+    Long countByApplicationId(Long applicationId);
 }

@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -31,6 +32,9 @@ import java.util.concurrent.TimeUnit;
         redisTemplate.opsForSet().add(key, value);
     }
 
+    public Set<String> getSetMembers(String key) {
+        return redisTemplate.opsForSet().members(key);
+    }
     /**
      * Check if a key exists in Redis.
      *
