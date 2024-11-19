@@ -1,4 +1,4 @@
-# chats
+# Chat
 
 Chats is a system that create chatting systems.
 
@@ -12,6 +12,10 @@ Chats is a system that create chatting systems.
 | Chaching         | [Redis](https://redis.io/)                                          |                                              |
 | Queueing         | [RabbitMQ](https://www.rabbitmq.com/)                               | Queuing/consuming  chats & messages to be created                          |
 | Containerization | [Docker](https://www.docker.com/)                                   | Base environment for the stack to run inside |
+
+### Solution Overview
+#### Design
+![architecture](https://github.com/MuhamedKhaled/chat-system/blob/main/architecture.jpg)
 
 ### How to run the project ?
 
