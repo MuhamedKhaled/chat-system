@@ -7,7 +7,7 @@ Chats is a system that create chatting systems.
 | Category         | Tool                                                                | Usage                                        |
 |:-----------------|:--------------------------------------------------------------------|:---------------------------------------------|
 | Backend server   | [Java Spring](https://spring.io/)                                   |                                              |
-| Migration        | [Flyway]                                                            |                                              |            
+| Migration        | Flyway                                                            |                                              |            
 | Database         | [MySQL](https://www.mysql.com/)                                     |                                              |
 | Chaching         | [Redis](https://redis.io/)                                          |                                              |
 | Queueing         | [RabbitMQ](https://www.rabbitmq.com/)                               | Queuing/consuming  chats & messages to be created                          |
