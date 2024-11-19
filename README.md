@@ -1,4 +1,4 @@
-# chats
+# Chat
 
 Chats is a system that create chatting systems.
 
