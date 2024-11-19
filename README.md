@@ -13,6 +13,10 @@ Chats is a system that create chatting systems.
 | Queueing         | [RabbitMQ](https://www.rabbitmq.com/)                               | Queuing/consuming  chats & messages to be created                          |
 | Containerization | [Docker](https://www.docker.com/)                                   | Base environment for the stack to run inside |
 
+### Solution Overview
+#### Design
+![architecture](https://github.com/MuhamedKhaled/chat-system/blob/main/architecture.jpg)
+
 ### How to run the project ?
 
 - You need to have [docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/) installed
